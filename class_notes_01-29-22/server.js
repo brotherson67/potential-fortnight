@@ -1,3 +1,4 @@
+// this is just a simple express server setup nothing crazy to see here
 import express from "express";
 
 const app = express();
