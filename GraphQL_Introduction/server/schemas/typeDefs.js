@@ -16,8 +16,20 @@ const typeDefs = gql`
     createdAt: String
   }
 
+  type User {
+    _id: ID
+    username: String
+    email: String
+    thoughts: [Thought]
+    friends: [User]
+    friendCount: Int
+  }
+
   type Query {
+    users: [User]
+    users(username: String!): User
     thoughts(username: String): [Thought]
+    thoughts(_id: ID!): Thought
   }
 `;
 
