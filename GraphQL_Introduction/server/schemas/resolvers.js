@@ -60,41 +60,48 @@ const resolvers = {
 
       return { user, token };
     },
-    addThought: async(parent, args, contexts) {
+    addThought: async (parent, args, contexts) => {
       if (context.user) {
-        const thought = Thought.create({...args, username: context.user.username})
+        const thought = Thought.create({
+          ...args,
+          username: context.user.username,
+        });
 
         await User.findByIdAndUpdate(
-          { _id: context.user._id} , 
+          { _id: context.user._id },
           { $push: { thoughts: thought._id } },
-          {new: true}
-        )
-        return thought
+          { new: true }
+        );
+        return thought;
       }
-      throw new AuthenticationError("You need to be logged in")
+      throw new AuthenticationError("You need to be logged in");
     },
-    addReaction: async(parent, {thoughtId, reactionBody }, context){
-      if (context.user){
+    addReaction: async (parent, { thoughtId, reactionBody }, context) => {
+      if (context.user) {
         const updatedThought = await Thought.findOneAndUpdate(
-          {_id: thoughtId},
-          {$push: {reactions: {reactionBody, username: context.user.username}}},
-          {new: true, runValidators: true}
-        )
+          { _id: thoughtId },
+          {
+            $push: {
+              reactions: { reactionBody, username: context.user.username },
+            },
+          },
+          { new: true, runValidators: true }
+        );
         return updatedThought;
       }
-      throw new AuthenticationError("you need to be logged in")
+      throw new AuthenticationError("you need to be logged in");
     },
-    addFriend : async (parent, { friendId }, context) => {
+    addFriend: async (parent, { friendId }, context) => {
       if (user.context) {
         const updatedUser = await User.findOneAndUpdate(
-          {_id: context.user._id},
-          {$addToSet: {friends: friendId}},
-          {new: true}
-        ).populate("friends")
-        return updatedUser
+          { _id: context.user._id },
+          { $addToSet: { friends: friendId } },
+          { new: true }
+        ).populate("friends");
+        return updatedUser;
       }
-      throw new AuthenticationError("You need to be logged in")
-    }
+      throw new AuthenticationError("You need to be logged in");
+    },
   },
 };
 
