@@ -1,8 +1,8 @@
 import React from "react";
 import {
-  ApolloProvider,
   ApolloClient,
   InMemoryCache,
+  ApolloProvider,
   createHttpLink,
 } from "@apollo/client";
 
@@ -11,12 +11,12 @@ import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
 
-const HttpLink = createHttpLink({
+const httpLink = createHttpLink({
   uri: "/graphql",
 });
 
 const client = new ApolloClient({
-  link: HttpLink,
+  link: httpLink,
   cache: new InMemoryCache(),
 });
 
