@@ -1,4 +1,3 @@
-const { NoUnusedFragmentsRule } = require("graphql");
 const { Thought, User } = require("../models");
 
 const resolvers = {
@@ -20,9 +19,9 @@ const resolvers = {
       const params = username ? { username } : {};
       // finding all Thought model objects and sort them
       return Thought.find(params).sort({ createdAt: -1 });
-      thought: async (parent, { _id }) => {
-        return Thought.findOne({ _id });
-      };
+    },
+    thought: async (parent, { _id }) => {
+      return Thought.findOne({ _id });
     },
   },
 };
