@@ -60,7 +60,7 @@ const resolvers = {
 
       return { user, token };
     },
-    addThought: async (parent, args, contexts) => {
+    addThought: async (parent, args, context) => {
       if (context.user) {
         const thought = Thought.create({
           ...args,
